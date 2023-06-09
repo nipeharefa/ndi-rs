@@ -14,7 +14,7 @@ fn main() {
     // linear gradient along x
     for i in 0..NUM_BYTES {
         let channel = i % 4;
-        let pos = i / 4;
+        let pos = i / 2;
         let x = pos % 1920;
         buf[i] = if channel == 3 {
             255_u8
@@ -32,7 +32,7 @@ fn main() {
         ndi::FrameFormatType::Progressive,
         0,
         0,
-        4 * 1920,
+        // 4 * 1920,
         None,
         buf.as_mut_slice(),
     );
@@ -60,12 +60,13 @@ fn main() {
     let num_connected_to_sender = send.get_no_connections(1000);
     println!("Receivers on sender: {}", num_connected_to_sender);
 
+    
     let mut video_data = None;
     loop {
         send.send_video(&video_data_send);
         let res = recv.capture_video(&mut video_data, 1000);
         if res == ndi::FrameType::Video {
-            break;
+            // break;
         }
     }
 
